@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 const API_URL = "https://project-management-api-4641927fee65.herokuapp.com";
+import AddTask from "../components/AddTask";
+import TaskCard from "../components/TaskCard";
 
 function ProjectDetailsPage(props) {
   const [project, setProject] = useState(null);
@@ -31,14 +33,10 @@ function ProjectDetailsPage(props) {
         </>
       )}
 
+      <AddTask refreshProject={getProject} projectId={projectId} />
+
       {project &&
-        project.tasks.map((task) => (
-          <li className="TaskCard card" key={task.id}>
-            <h3>{task.title}</h3>
-            <h4>Description:</h4>
-            <p>{task.description}</p>
-          </li>
-        ))}
+        project.tasks.map((task) => <TaskCard key={task.id} {...task} />)}
 
       <Link to="/projects">
         <button>Back to projects</button>
